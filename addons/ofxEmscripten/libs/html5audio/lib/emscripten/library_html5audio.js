@@ -183,12 +183,11 @@ var LibraryHTML5Audio = {
 
 	html5audio_stream_create: function(context_id, bufferSize, inputChannels, outputChannels, inbuffer, outbuffer, callback, userData){
 		var stream = AUDIO.contexts[context_id].createScriptProcessor(bufferSize,inputChannels,outputChannels);
-		var inbufferArray = Module.HEAPF32.subarray(inbuffer>>2,(inbuffer>>2)+bufferSize*inputChannels);
-		var outbufferArray = Module.HEAPF32.subarray(outbuffer>>2,(outbuffer>>2)+bufferSize*outputChannels);
-
 		var id = AUDIO.lastStreamID++;
 
 		stream.onaudioprocess = function(event){
+                        var inbufferArray = Module.HEAPF32.subarray(inbuffer>>2,(inbuffer>>2)+bufferSize*inputChannels);
+		        var outbufferArray = Module.HEAPF32.subarray(outbuffer>>2,(outbuffer>>2)+bufferSize*outputChannels);
 			var i,j,c;
 			if(inputChannels>0){
 				for(c=0;c<inputChannels;++c){
