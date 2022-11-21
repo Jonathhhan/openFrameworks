@@ -22,7 +22,7 @@ void ofApp::setup(){
 	vidGrabber.setDesiredFrameRate(30);
 	vidGrabber.initGrabber(camWidth, camHeight);
 
-	videoInverted.allocate(vidGrabber.getWidth(), vidGrabber.getHeight(), OF_PIXELS_RGB);
+	videoInverted.allocate(camWidth, camHeight, OF_PIXELS_RGB);
 	videoTexture.allocate(videoInverted);
 	ofSetVerticalSync(true);
 }
@@ -47,8 +47,10 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 	ofSetHexColor(0xffffff);
-	vidGrabber.draw(20, 20);
-	videoTexture.draw(20 + camWidth, 20, camWidth, camHeight);
+	if (vidGrabber.getTexture().isAllocated()){
+		vidGrabber.getTexture().draw(20, 20);
+		videoTexture.draw(20 + camWidth, 20, camWidth, camHeight);
+	}
 }
 
 
