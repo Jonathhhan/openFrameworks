@@ -47,7 +47,7 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 	ofSetHexColor(0xffffff);
-	if (vidGrabber.getTexture().isAllocated()){
+	if(vidGrabber.getTexture().isAllocated()){
 		vidGrabber.getTexture().draw(20, 20);
 		videoTexture.draw(20 + camWidth, 20, camWidth, camHeight);
 	}
