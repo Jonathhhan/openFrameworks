@@ -78,9 +78,9 @@ var LibraryHTML5Video = {
             navigator.mediaDevices.enumerateDevices()
             .then((devices) => {
                 devices.forEach((device) => {
-                    if(device.kind == "videoinput"){
+                    // if(device.kind == "videoinput"){
                         string = string.concat(",", `${device.kind}: ${device.label} id = ${device.deviceId}`);
-                    }
+                    // }
                 });
                 console.log(string);
                 Module.videoDevices1(string);
