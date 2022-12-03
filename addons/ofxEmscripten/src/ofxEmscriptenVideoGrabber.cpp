@@ -12,6 +12,8 @@
 
 using namespace std;
 
+ofEvent<std::string> videoDevicesEvent;
+
 enum ReadyState{
 	HAVE_NOTHING = 0,
 	HAVE_METADATA,
@@ -32,8 +34,7 @@ ofxEmscriptenVideoGrabber::~ofxEmscriptenVideoGrabber() {
 	// TODO Auto-generated destructor stub
 }
 
-// load async strings from JS
-ofEvent<std::string> videoDevicesEvent;
+// load async strings from J
 
 vector<ofVideoDevice> ofxEmscriptenVideoGrabber::listDevices() const{
 	html5video_list_devices(); // calls JS
@@ -46,7 +47,7 @@ void videoDevices1(std::string videoDevices){
 
 void ofxEmscriptenVideoGrabber::videoDevices2(std::string &videoDevices) {
         ofLog(OF_LOG_NOTICE, "device list is loaded");
-	a std::vector<:string> deviceList = ofSplitString(",", "videoDevices")
+	std::vector<std::string> deviceList = ofSplitString(videoDevices, ",", true);
 	for (auto device : deviceList) {
             ofLog(OF_LOG_NOTICE, device);
         }
