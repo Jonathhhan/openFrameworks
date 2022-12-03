@@ -75,8 +75,10 @@ var LibraryHTML5Video = {
             console.log("enumerateDevices() not supported.");
         } else {
             // List cameras and microphones.
+            var string = "";
             navigator.mediaDevices.enumerateDevices()
             .then((devices) => {
+		
                 devices.forEach((device) => {
                     // if(device.kind == "videoinput"){
                         string = string.concat(",", `${device.kind}: ${device.label} id = ${device.deviceId}`);
