@@ -7,6 +7,8 @@
 
 #include "ofxEmscriptenVideoGrabber.h"
 #include "html5video.h"
+#include "emscripten/bind.h"
+#include "ofEvents.h"
 
 using namespace std;
 
@@ -23,16 +25,32 @@ ofxEmscriptenVideoGrabber::ofxEmscriptenVideoGrabber()
 ,desiredFramerate(-1)
 ,usePixels(true){
 	// TODO Auto-generated constructor stub
-
+	ofAddListener(videoDevicesEvent, this, &ofxEmscriptenVideoGrabber::videoDevices2);
 }
 
 ofxEmscriptenVideoGrabber::~ofxEmscriptenVideoGrabber() {
 	// TODO Auto-generated destructor stub
 }
 
+// load async strings from JS
+ofEvent<std::string> videoDevicesEvent;
+
 vector<ofVideoDevice> ofxEmscriptenVideoGrabber::listDevices() const{
-	html5video_list_devices();
-	return vector<ofVideoDevice>();
+	html5video_list_devices(); // calls JS
+	return vector<ofVideoDevice>(); // does nothing
+}
+
+void videoDevices1(std::string videoDevices){
+	videoDevicesEvent.notify(videoDevices); // called from JS, sends it into the addons scope
+}
+
+void ofxEmscriptenVideoGrabber::videoDevices2(std::string &videoDevices) {
+        ofLog(OF_LOG_NOTICE, "device list is loaded");
+	videoDeviceList = videoDevices; // set addon variable
+}
+
+EMSCRIPTEN_BINDINGS(Module) {
+	emscripten::function("videoDevices1", &videoDevices1); // defines the embind method
 }
 
 bool ofxEmscriptenVideoGrabber::setup(int w, int h){
