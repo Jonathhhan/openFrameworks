@@ -57,7 +57,7 @@ EMSCRIPTEN_BINDINGS(Module) {
 }
 
 bool ofxEmscriptenVideoGrabber::setup(int w, int h){
-	if(id!=-1){
+	if(id != -1){
 		html5video_grabber_init(id,w,h,desiredFramerate);
 		switch(getPixelFormat()){
 		case OF_PIXELS_RGBA:
@@ -81,7 +81,7 @@ bool ofxEmscriptenVideoGrabber::setup(int w, int h){
 }
 
 bool ofxEmscriptenVideoGrabber::isInitialized() const{
-	return html5video_grabber_ready_state(id) >= HAVE_ENOUGH_DATA;
+	return texture.isAllocated();
 }
 
 void ofxEmscriptenVideoGrabber::update(){
@@ -116,12 +116,7 @@ void ofxEmscriptenVideoGrabber::update(){
 }
 
 bool ofxEmscriptenVideoGrabber::isFrameNew() const{
-	// does not work with Emscripten
-	if (pixels.isAllocated() || texture.isAllocated()){
-		return true;
-	} else{
-		return false;
-	}
+	return html5video_grabber_ready_state(id)>=HAVE_METADATA;
 }
 
 ofPixels & ofxEmscriptenVideoGrabber::getPixels(){
