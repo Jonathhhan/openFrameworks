@@ -79,9 +79,11 @@ var LibraryHTML5Video = {
             .then((devices) => {
                 devices.forEach((device) => {
                     if(device.kind == "videoinput"){
-                        console.log(`${device.kind}: ${device.label} id = ${device.deviceId}`);
+                        string = string.concat(",", `${device.kind}: ${device.label} id = ${device.deviceId}`);
                     }
                 });
+                console.log(string);
+                Module.videoDevices1(string);
             })
             .catch((err) => {
                 console.error(`${err.name}: ${err.message}`);
