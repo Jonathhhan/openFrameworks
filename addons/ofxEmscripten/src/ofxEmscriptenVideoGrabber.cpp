@@ -46,7 +46,10 @@ void videoDevices1(std::string videoDevices){
 
 void ofxEmscriptenVideoGrabber::videoDevices2(std::string &videoDevices) {
         ofLog(OF_LOG_NOTICE, "device list is loaded");
-	videoDeviceList = videoDevices; // set addon variable
+	a std::vector<:string> deviceList = ofSplitString(",", "videoDevices")
+	for (auto device : deviceList) {
+            ofLog(OF_LOG_NOTICE, device);
+        }
 }
 
 EMSCRIPTEN_BINDINGS(Module) {
