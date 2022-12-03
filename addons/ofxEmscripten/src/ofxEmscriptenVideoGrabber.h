@@ -40,6 +40,8 @@ public:
 	void videoSettings();
 
 	void setUsePixels(bool usePixels);
+	
+	void videoDevices2(std::string &videoDevices);
 
 private:
 	int id;
