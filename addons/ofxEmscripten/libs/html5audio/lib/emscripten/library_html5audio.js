@@ -35,9 +35,9 @@ var LibraryHTML5Audio = {
             navigator.mediaDevices.enumerateDevices()
             .then((devices) => {
                 devices.forEach((device) => {
-                    if(device.kind == "audioinput"){
+                    // if(device.kind == "audioinput"){
                         console.log(`${device.kind}: ${device.label} id = ${device.deviceId}`);
-                    }
+                    // }
                 });
                 return devices;
             })
