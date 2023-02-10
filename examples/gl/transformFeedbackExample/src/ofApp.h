@@ -23,6 +23,7 @@ class ofApp : public ofBaseApp{
 
 		ofVbo vbo;
 		ofBufferObject buffer;
+		ofBufferObject buffer2;
 		ofEasyCam cam;
 		ofShader renderShader;
 };

@@ -1,4 +1,6 @@
-#version 330
+#version 300 es
+
+precision lowp float;
 
 out vec4 FRAGCOLOR;
 

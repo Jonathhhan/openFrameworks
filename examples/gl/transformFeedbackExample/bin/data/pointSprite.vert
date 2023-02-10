@@ -1,4 +1,4 @@
-#version 330
+#version 300 es
 
 //-- automatically set by OF ------- //
 uniform mat4 modelViewProjectionMatrix;
@@ -10,7 +10,7 @@ in vec4 color;
 // ---------------------------------- //
 
 //-- uniforms set from ofApp ---- //
-uniform float uPointSize = 10;
+uniform float uPointSize;
 // ---------------------------------- //
 
 //-- output to the frag shader ---- //

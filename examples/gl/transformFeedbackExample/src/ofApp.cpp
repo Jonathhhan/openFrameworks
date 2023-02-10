@@ -15,7 +15,8 @@ void ofApp::setup(){
 	// We only need a vertex shader since we are only using the
 	// shader to store the modified vertices in a buffer
 	ofShader::TransformFeedbackSettings settings;
-	settings.shaderFiles[GL_VERTEX_SHADER] = "vert.glsl";
+	settings.shaderFiles[GL_VERTEX_SHADER] = "vert.vert";
+	settings.shaderFiles[GL_FRAGMENT_SHADER] = "vert.frag";
 	settings.bindDefaults = false;
 	settings.varyingsToCapture = { "v_position", "v_color" };
 
@@ -24,11 +25,11 @@ void ofApp::setup(){
 
 	// allocate enough space for all the vertices in a gpu buffer
 	buffer.allocate(sizeof(glm::vec4) * 2 * numVertices, GL_STATIC_DRAW);
+	buffer2.allocate(sizeof(glm::vec4) * 2 * numVertices, GL_STATIC_DRAW);
 
-	
 	// bind the full buffer using glBindBaseBuffer to default index 0
 	// and draw the mesh which will end up stored in our buffer
-	shader.beginTransformFeedback(GL_POINTS, buffer);
+	shader.beginTransformFeedback(GL_POINTS, buffer2);
 	shader.setUniform1i("numVertices", numVertices);
 	mesh.draw();
 	shader.endTransformFeedback(buffer);
