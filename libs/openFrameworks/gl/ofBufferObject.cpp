@@ -82,7 +82,7 @@ void ofBufferObject::unbind(GLenum target) const{
 	}
 }
 
-#ifndef TARGET_OPENGLES
+#if !defined(TARGET_OPENGLES) || defined(TARGET_EMSCRIPTEN)
 void ofBufferObject::bindBase(GLenum target,GLuint index) const{
 	if(data){
 		glBindBufferBase(target,index,data->id);
@@ -154,7 +154,7 @@ void ofBufferObject::updateData(GLsizeiptr bytes, const void * data){
     updateData(0,bytes,data);
 }
 
-#ifndef TARGET_OPENGLES
+#if !defined(TARGET_OPENGLES) || defined(TARGET_EMSCRIPTEN)
 void * ofBufferObject::map(GLenum access){
 	if(!this->data) return nullptr;
 

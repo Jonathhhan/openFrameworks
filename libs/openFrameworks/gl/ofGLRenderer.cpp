@@ -117,7 +117,7 @@ void ofGLRenderer::draw(const ofMesh & vertexData, ofPolyRenderMode renderType, 
 
 		if(vertexData.getNumIndices()){
 	// This is never executed right now but this branch of the ifdef should be used for GLES 3 so let's keep it for future uses
-	#ifdef TARGET_OPENGLES
+	#if defined TARGET_OPENGLES && not defined TARGET_EMSCRIPTEN
 			glDrawElements(ofGetGLPrimitiveMode(vertexData.getMode()), vertexData.getNumIndices(),GL_UNSIGNED_SHORT,vertexData.getIndexPointer());
 	#else
 			glDrawElements(ofGetGLPrimitiveMode(vertexData.getMode()), vertexData.getNumIndices(),GL_UNSIGNED_INT,vertexData.getIndexPointer());
@@ -210,7 +210,7 @@ void ofGLRenderer::draw(const ofVboMesh & mesh, ofPolyRenderMode renderType) con
 void ofGLRenderer::drawInstanced(const ofVboMesh & mesh, ofPolyRenderMode renderType, int primCount) const{
 	if(mesh.getNumVertices()==0) return;
 	GLuint mode = ofGetGLPrimitiveMode(mesh.getMode());
-#ifndef TARGET_OPENGLES
+#if !defined(TARGET_OPENGLES) || defined(TARGET_EMSCRIPTEN)
 	glPolygonMode(GL_FRONT_AND_BACK, ofGetGLPolyMode(renderType));
 	if(mesh.getNumIndices() && renderType!=OF_MESH_POINTS){
 		if (primCount <= 1) {
@@ -385,7 +385,7 @@ void ofGLRenderer::draw(const ofVbo & vbo, GLuint drawMode, int first, int total
 void ofGLRenderer::drawElements(const ofVbo & vbo, GLuint drawMode, int amt, int offsetelements) const{
 	if(vbo.getUsingVerts()) {
 		vbo.bind();
-#ifdef TARGET_OPENGLES
+#if defined TARGET_OPENGLES && not defined TARGET_EMSCRIPTEN
 		glDrawElements(drawMode, amt, GL_UNSIGNED_SHORT, (void*)(sizeof(ofIndexType) * offsetelements));
 #else
 		glDrawElements(drawMode, amt, GL_UNSIGNED_INT, (void*)(sizeof(ofIndexType) * offsetelements));
@@ -398,7 +398,7 @@ void ofGLRenderer::drawElements(const ofVbo & vbo, GLuint drawMode, int amt, int
 void ofGLRenderer::drawInstanced(const ofVbo & vbo, GLuint drawMode, int first, int total, int primCount) const{
 	if(vbo.getUsingVerts()) {
 		vbo.bind();
-#ifdef TARGET_OPENGLES
+#if defined TARGET_OPENGLES && not defined TARGET_EMSCRIPTEN
 		// todo: activate instancing once OPENGL ES supports instancing, starting with version 3.0
 		// unfortunately there is currently no easy way within oF to query the current OpenGL version.
 		// https://www.khronos.org/opengles/sdk/docs/man3/xhtml/glDrawElementsInstanced.xml
@@ -415,7 +415,7 @@ void ofGLRenderer::drawInstanced(const ofVbo & vbo, GLuint drawMode, int first, 
 void ofGLRenderer::drawElementsInstanced(const ofVbo & vbo, GLuint drawMode, int amt, int primCount) const{
 	if(vbo.getUsingVerts()) {
 		vbo.bind();
-#ifdef TARGET_OPENGLES
+#if defined TARGET_OPENGLES && not defined TARGET_EMSCRIPTEN
 		// todo: activate instancing once OPENGL ES supports instancing, starting with version 3.0
 		// unfortunately there is currently no easy way within oF to query the current OpenGL version.
 		// https://www.khronos.org/opengles/sdk/docs/man3/xhtml/glDrawElementsInstanced.xml
@@ -508,7 +508,7 @@ void ofGLRenderer::bind(const ofFbo & fbo){
 	glBindFramebuffer(GL_FRAMEBUFFER, currentFramebufferId);
 }
 
-#ifndef TARGET_OPENGLES
+#if !defined(TARGET_OPENGLES) || defined(TARGET_EMSCRIPTEN)
 //----------------------------------------------------------
 void ofGLRenderer::bindForBlitting(const ofFbo & fboSrc, ofFbo & fboDst, int attachmentPoint){
 	if (currentFramebufferId == fboSrc.getId()){

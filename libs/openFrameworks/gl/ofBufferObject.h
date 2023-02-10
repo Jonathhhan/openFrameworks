@@ -39,7 +39,7 @@ public:
 	/// binds the passed target to buffer 0
 	void unbind(GLenum target) const;
 
-#ifndef TARGET_OPENGLES
+#if !defined(TARGET_OPENGLES) || defined(TARGET_EMSCRIPTEN)
 	/// glBindBufferBase: https://www.opengl.org/sdk/docs/man4/html/glBindBufferBase.xhtml
 	void bindBase(GLenum target,GLuint index) const;
 
@@ -94,7 +94,7 @@ public:
         updateData(0,data.size()*sizeof(T),&data[0]);
     }
 
-#ifndef TARGET_OPENGLES
+#if !defined(TARGET_OPENGLES) || defined(TARGET_EMSCRIPTEN)
 	/// glMapNamedBuffer: https://www.opengl.org/sdk/docs/man4/html/glMapBuffer.xhtml
 	/// before GL 4.5 emulates glMapNamedBuffer by binding to last known target
 	/// for this buffer and mapping that target

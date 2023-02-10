@@ -22,7 +22,7 @@ bool ofVbo::vaoChecked=false;
 
 using std::map;
 
-#ifdef TARGET_OPENGLES
+#if defined TARGET_OPENGLES && not defined TARGET_EMSCRIPTEN
 	#include <dlfcn.h>
 	typedef void (* glGenVertexArraysType) (GLsizei n,  GLuint *arrays);
 	glGenVertexArraysType glGenVertexArraysFunc = nullptr;
@@ -849,9 +849,6 @@ void ofVbo::bind() const{
 				vaoChecked = true;
 				vaoSupported = glGenVertexArrays;
 			}
-			#elif  defined(TARGET_EMSCRIPTEN)
-				vaoChecked = true;
-				vaoSupported = false;
 			#else
 				vaoChecked = true;
 				vaoSupported = true;
