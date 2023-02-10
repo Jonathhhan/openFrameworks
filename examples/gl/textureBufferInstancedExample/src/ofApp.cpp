@@ -21,7 +21,7 @@ void ofApp::setup(){
 
 	// now we bind the texture to the shader as a uniform
 	// so we can read the texture buffer from it
-	shader.load("vert.glsl","frag.glsl");
+	shader.load("shader");
 	shader.begin();
 	shader.setUniformTexture("tex",tex,0);
 	shader.end();
