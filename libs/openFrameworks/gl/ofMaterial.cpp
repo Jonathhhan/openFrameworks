@@ -4,7 +4,6 @@
 #include "ofCubeMap.h"
 #include "ofImage.h"
 #include "ofGLProgrammableRenderer.h"
-#include <typeinfo>
 
 using std::shared_ptr;
 using std::string;
