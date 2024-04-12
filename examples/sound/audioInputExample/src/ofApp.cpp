@@ -9,13 +9,13 @@ void ofApp::setup(){
 	
 	soundStream.printDeviceList();
 
-	#ifdef TARGET_EMSCRIPTEN
-		int bufferSize = 128;
-		multiply = 4;
-	#else
-		int bufferSize = 256;
-		multiply = 2;
-	#endif
+#ifdef TARGET_EMSCRIPTEN
+	int bufferSize = 128;
+	multiply = 4;
+#else
+	int bufferSize = 256;
+	multiply = 2;
+#endif
 
 	left.assign(bufferSize, 0.0);
 	right.assign(bufferSize, 0.0);
@@ -48,11 +48,11 @@ void ofApp::setup(){
 
 	settings.setInListener(this);
 	settings.sampleRate = 44100;
-	#ifdef TARGET_EMSCRIPTEN
-		settings.numOutputChannels = 2;
-	#else
-		settings.numOutputChannels = 0;
-	#endif
+#ifdef TARGET_EMSCRIPTEN
+	settings.numOutputChannels = 2;
+#else
+	settings.numOutputChannels = 0;
+#endif
 	settings.numInputChannels = 1;
 	settings.bufferSize = bufferSize;
 	soundStream.setup(settings);
