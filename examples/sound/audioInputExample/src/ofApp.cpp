@@ -8,8 +8,14 @@ void ofApp::setup(){
 	ofBackground(54, 54, 54);	
 	
 	soundStream.printDeviceList();
-	
-	int bufferSize = 256;
+
+	#ifdef TARGET_EMSCRIPTEN
+		int bufferSize = 128;
+		multiply = 4;
+	#else
+		int bufferSize = 256;
+		multiply = 2;
+	#endif
 
 	left.assign(bufferSize, 0.0);
 	right.assign(bufferSize, 0.0);
@@ -92,7 +98,8 @@ void ofApp::draw(){
 					
 			ofBeginShape();
 			for (unsigned int i = 0; i < left.size(); i++){
-				ofVertex(i*2, 100 -left[i]*180.0f);
+				int bufferSize = 256;
+				ofVertex(i*multiply, 100 -left[i]*180.0f);
 			}
 			ofEndShape(false);
 			
@@ -115,7 +122,7 @@ void ofApp::draw(){
 					
 			ofBeginShape();
 			for (unsigned int i = 0; i < right.size(); i++){
-				ofVertex(i*2, 100 -right[i]*180.0f);
+				ofVertex(i*multiply, 100 -right[i]*180.0f);
 			}
 			ofEndShape(false);
 			
