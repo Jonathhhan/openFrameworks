@@ -93,15 +93,18 @@ void ofxSvg::fixSvgString(std::string & xmlstring) {
 
 	// so it turns out that if the stroke width is <1 it rounds it down to 0,
 	// and makes it disappear because svgtiny stores strokewidth as an integer!
-	ofXml::Search strokeWidthElements = xml.find("//*[@stroke-width]");
-	if (!strokeWidthElements.empty()) {
-		for (ofXml & element : strokeWidthElements) {
-			//cout << element.toString() << endl;
-			float strokewidth = element.getAttribute("stroke-width").getFloatValue();
-			strokewidth = std::fmax(1.0, std::round(strokewidth));
-			element.getAttribute("stroke-width").set(strokewidth);
-		}
-	}
+	// 
+	// ofXml::find does not work with SWIG!
+	// 
+	//ofXml::Search strokeWidthElements = xml.find("//*[@stroke-width]");
+	//if (!strokeWidthElements.empty()) {
+	//	for (ofXml & element : strokeWidthElements) {
+	//		//cout << element.toString() << endl;
+	//		float strokewidth = element.getAttribute("stroke-width").getFloatValue();
+	//		strokewidth = MAX(1, round(strokewidth));
+	//		element.getAttribute("stroke-width").set(strokewidth);
+	//	}
+	//}
 
 	// Affinity Designer does not set width/height as pixels but as a percentage
 	// and relies on the "viewBox" to convey the size of things. this applies the
